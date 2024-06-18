@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regisration</title>
+    <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="form-wrapper sign-up">
+            <form action="/signup" method="post">
+                <h2>Signup</h2>
+                <div class="input-group">
+                    <input type="text" id="username" name="username">
+                    <label for="username">Username</label>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="email" name="email">
+                    <label for="email">Email</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" name="password">
+                    <label for="password">Password</label>
+                </div>
+                <div>
+                    <button onclick="return validateForm()" type="submit">Signup</button>
+                </div>
+                <div class="signup-link">
+                    <p>Already have an account?<a href="/login" class="signbtn-link">Login</a></p>
+                </div>
+                <div class="error" id="error-Message"></div>
+            </form>
+        </div>
+    </div>
+   
+    <script>
+        function validateForm() {  
+            let error = "";
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const checkUsername = username.trim() == '';
+            const checkEmail = email.trim() == '';
+
+            if (checkUsername) {
+                error = 'Username is required';
+            } else if (checkEmail) {
+                error = 'Email is required';
+            } else if (!isValidEmail(email)) {
+                error = 'Invalid email format';
+            }
+
+            if (password.length < 8 || password.trim() == '' || checkUsername || checkEmail) {
+                alert(error || "Password must be at least 8 characters long");
+                return false;
+            }
+            return true;
+        }
+
+        function isValidEmail(email) {
+            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
+    </script> 
+</body>
+</html>
