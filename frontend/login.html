@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="form-wrapper sign-up">
+            <form >
+                <h2>Login</h2>
+                <div class="input-group">
+                    <input type="email" id="email" name="email" required>
+                    <label for="email">Email</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" name="password" required>
+                    <label for="password">Password</label>
+                </div>
+                <div>
+                    <button onclick="return validateForm(event)" type="submit">Login</button>
+                </div>
+                <div class="signup-link">
+                    <p>Dont have an account?<a href="/signup.html" class="signbtn-link">Sign up</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+   
+    <script>
+        function validateForm(event) {  
+            event.preventDefault()
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const data = {
+                "email": email,
+                "password": password
+            }
+
+         
+            if (password.length < 8) {
+                alert( "Password must be at least 8 characters long");
+                return false;
+            }
+            postData(data)
+        }
+
+        async function postData( data) {
+            try {
+                const response = await fetch("http://localhost:3010/user/login", {
+                method: 'POST', // or 'PUT', 'DELETE', etc.
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data) 
+                });
+
+                const responseData = await response.json();
+                if (!responseData.success) {
+                throw  Error(responseData.error);
+                }
+                alert(responseData.message)
+                return responseData;
+            } catch (error) {
+                alert(error.message)
+            }
+}
+    </script>
+</body>
+</html>
