@@ -8,4 +8,4 @@ export const db= ()=>{
     console.log('Connection successful');
 }).catch((e) => {
     console.log(e);
-})}
+})} 
