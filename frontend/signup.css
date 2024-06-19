@@ -7,18 +7,16 @@
     font-family: 'poppins', sans-serif;
 }
 
-body {
+
+.wrapper {
+    margin-left: 35%;
+    margin-top: 3%;
     background: rgb(245, 235, 235);
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-}
-
-.wrapper {
-    position: relative;
-    width: 400px;
-    height: 500px;
+    width: 30%;
+    height: fit-content;
     background: rgb(10, 10, 10);
     box-shadow: 0 0 50px #f3e4e4;
     border-radius: 20px;
@@ -72,7 +70,7 @@ h2 {
     top: -5px;
 }
 
-button {
+.signup-button, .login-button {
     position: relative;
     width: 50%;
     height: 40px;
