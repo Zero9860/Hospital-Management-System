@@ -4,12 +4,14 @@ body {
     margin: 0;
     padding: 0;
 }
-
+html{
+    position: relative;
+}
 .container {
     max-width: 600px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: aqua;
+    margin: 20px auto 70px auto;
+    padding: 10px;
+    background-color: rgb(119, 133, 133);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
 }
@@ -20,7 +22,7 @@ h2 {
 }
 
 .form-group {
-    margin-bottom: 15px;
+    /* margin-bottom: 15px; */
 }
 
 label {
@@ -34,7 +36,7 @@ input, select, textarea, button {
     box-sizing: border-box;
 }
 
-button {
+form button {
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -42,7 +44,7 @@ button {
     margin-top: 20px;
 }
 
-button:hover {
+form button:hover {
     background-color: #0056b3;
 }
 

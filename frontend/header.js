@@ -13,11 +13,13 @@ document.write(`
                 <li><a href="contact.html">Contact</a></li>
                 <li><a href="dep.html">Department</a></li>
                 <li><a href="bookings.html" style="white-space:nowrap">My Bookings</a></li>
+                <li id="add-depart"><a href="depBack.html">Add Depart</a></li>
+
 
             </div>
         </ul>
-        <p id="username" style="width:20%;white-space:nowrap;font-size:2rem;color:#66ec66"> </p>
-        <button id="logout" onclick="handleLogout()" style="cursor:pointer;background-color:blue;color:whitesmoke;padding:0.35%;margin-left:40%;border-radius:10%;border:none; white-space:nowrap"> Log Out</button>
+        <p id="username" style="padding-left:2%;white-space:nowrap;font-size:1.5rem;color:#66ec66"> </p>
+        <button id="logout" onclick="handleLogout()" style="cursor:pointer;padding:0.35%;background-color:blue;color:whitesmoke;margin-left:50%;border-radius:10%;border:none; white-space:nowrap"> Log Out</button>
         <div class="rightNav v-class-resp">
             <button class="btns fa" >  <a href="signup.html" style="color:white; text-decoration:none">Book an Appointment </a></button>
         </div>

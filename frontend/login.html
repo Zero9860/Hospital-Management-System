@@ -68,7 +68,9 @@
                 throw  Error(responseData.error);
                 }
                 sessionStorage.setItem('user', responseData.username)
+                sessionStorage.setItem('role', responseData.role)
                 sessionStorage.setItem('email', responseData.email)
+
 
                 alert(responseData.message)
                 window.location.href="home.html"

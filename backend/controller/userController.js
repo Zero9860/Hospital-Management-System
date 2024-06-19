@@ -30,7 +30,6 @@ const login = async(req,res)=>{
         const {email, password} = req.body
         console.log(req.body)
         const user = await User.findOne({email: email})
-        let error = false
         if (!user){
             throw Error("login with correct credentials")
         }
@@ -39,7 +38,7 @@ const login = async(req,res)=>{
             throw Error("login with correct credentials")
         }
         console.log(user.name)
-        res.status(200).json({success: true,message:"Login SuccessFull", username:user.name, email:user.email})
+        res.status(200).json({success: true,message:"Login SuccessFull", username:user.name, email:user.email, role:user.role})
     } catch (error) {
         console.log(error)
         res.status(401).json({success: false, error: error.message})
