@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="signup.css">
+    <link rel="stylesheet" href="./css/style.css">
+
 </head>
 <body>
+    <script src="header.js"></script> 
+
     <div class="wrapper">
         <div class="form-wrapper sign-up">
             <form >
@@ -20,14 +24,16 @@
                     <label for="password">Password</label>
                 </div>
                 <div>
-                    <button onclick="return validateForm(event)" type="submit">Login</button>
+                    <button onclick="return validateForm(event)"  class="login-button" type="submit">Login</button>
                 </div>
                 <div class="signup-link">
-                    <p>Dont have an account?<a href="/signup.html" class="signbtn-link">Sign up</a></p>
+                    <p>Dont have an account?<a href="signup.html" class="signbtn-link">Sign up</a></p>
                 </div>
             </form>
         </div>
     </div>
+    <script src="footer.js"></script> 
+
    
     <script>
         function validateForm(event) {  
@@ -61,7 +67,11 @@
                 if (!responseData.success) {
                 throw  Error(responseData.error);
                 }
+                sessionStorage.setItem('user', responseData.username)
+                sessionStorage.setItem('email', responseData.email)
+
                 alert(responseData.message)
+                window.location.href="home.html"
                 return responseData;
             } catch (error) {
                 alert(error.message)

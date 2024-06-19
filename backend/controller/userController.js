@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt'
 const signUp = async (req,res)=>{
     try {
         
-        const { name, email, password } = req.body;
+        const { name, email, password,role } = req.body;
         console.log(req.body)
         const securedPass = await bcrypt.hash(password, 10)
         const checkUser  = await User.findOne({email: email})
@@ -14,7 +14,8 @@ const signUp = async (req,res)=>{
         await User.create({
             name: name,
             email: email,
-            password: securedPass
+            password: securedPass,
+            role: role
         })
        
             return res.status(200).json({message: "Signup succesfull", success:true});

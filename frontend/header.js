@@ -1,0 +1,57 @@
+document.write(`
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/header.css">
+</head>
+<body>
+    <nav class="navbar background h-nav-resp">
+        <ul class="nav-list v-class-resp">
+            <div class="logo">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="dep.html">Department</a></li>
+                <li><a href="bookings.html" style="white-space:nowrap">My Bookings</a></li>
+
+            </div>
+        </ul>
+        <p id="username" style="width:20%;white-space:nowrap;font-size:2rem;color:#66ec66"> </p>
+        <button id="logout" onclick="handleLogout()" style="cursor:pointer;background-color:blue;color:whitesmoke;padding:0.35%;margin-left:40%;border-radius:10%;border:none; white-space:nowrap"> Log Out</button>
+        <div class="rightNav v-class-resp">
+            <button class="btns fa" >  <a href="signup.html" style="color:white; text-decoration:none">Book an Appointment </a></button>
+        </div>
+        <div class="hand">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </nav>
+</body>
+</html>
+<script> 
+document.addEventListener('DOMContentLoaded', function() {
+    let user = sessionStorage.getItem("user");
+    let username = document.getElementById('username');
+    let logoutButton = document.getElementById('logout');
+
+    if (user) {
+        username.innerHTML = "Welcome " + user;
+        logoutButton.style.display = "block"; // Show the logout button
+    } else {
+        logoutButton.style.display = "none"; // Hide the logout button if no user is logged in
+    }
+});
+const handleLogout = ()=>{
+    const ans = confirm("Are you sure you want to Logout?")
+    if(!ans){
+    return
+    }
+    sessionStorage.clear()
+    logoutButton = "none"
+    username.innerHTML = ""
+        document.getElementById('logout').style.display = "none"; // Hide the logout button
+
+    }
+</script>
+`)

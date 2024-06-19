@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Regisration</title>
     <link rel="stylesheet" href="signup.css">
+    <link rel="stylesheet" href="./css/style.css">
+
 </head>
 <body>
+    <script src="header.js"></script> 
+
     <div class="wrapper">
         <div class="form-wrapper sign-up">
             <form >
@@ -24,15 +28,17 @@
                     <label for="password">Password</label>
                 </div>
                 <div>
-                    <button onclick="validateForm(event)" type="submit">Signup</button>
+                    <button onclick="validateForm(event)"  class="signup-button" type="submit">Signup</button>
                 </div>
                 <div class="signup-link">
-                    <p>Already have an account?<a href="/login.html" class="signbtn-link">Login</a></p>
+                    <p>Already have an account?<a href="login.html" class="signbtn-link">Login</a></p>
                 </div>
                 <div class="error" id="error-Message"></div>
             </form>
         </div>
     </div>
+    <script src="footer.js"></script> 
+
    
     <script>
         function validateForm(event) { 
