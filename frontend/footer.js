@@ -3,4 +3,4 @@ document.write(` <footer class="background" style="position:absolute; bottom:0;w
             Copyright &copy; 2025 www.Hospice.com - All rights reserverd
         </p>
     </footer>
-    <script src="js/resp.js"></script>`)
+    `)

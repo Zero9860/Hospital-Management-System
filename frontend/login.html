@@ -67,7 +67,11 @@
                 if (!responseData.success) {
                 throw  Error(responseData.error);
                 }
+                sessionStorage.setItem('user', responseData.username)
+                sessionStorage.setItem('email', responseData.email)
+
                 alert(responseData.message)
+                window.location.href="home.html"
                 return responseData;
             } catch (error) {
                 alert(error.message)
