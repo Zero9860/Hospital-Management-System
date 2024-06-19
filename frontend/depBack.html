@@ -32,5 +32,41 @@
     </div>
     <script src="footer.js"></script> 
 
+    <script>
+        function validateForm(event) { 
+            event.preventDefault() 
+            
+            const deptName = document.getElementById('deptName').value;
+            const deptDescription = document.getElementById('deptDescription').value;
+            const deptImage = document.getElementById('deptImage').value;
+            
+            const formData = {
+               "name" :deptName,
+               "description": deptDescription,
+               "image": deptImage
+            }
+            postData(data)
+        }
+        async function postData(data){
+            try {
+                const response = await fetch('http://localhost:3010/user/submit-department', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const responseData = await response.json();
+                if (!responseData.success) {
+                throw  Error(responseData.error);
+                }
+                alert(responseData.message)
+            } catch (error) {
+                alert(error.message)
+            }
+        }    
+    </script>
+
 </body>
 </html>

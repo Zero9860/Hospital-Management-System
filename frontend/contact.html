@@ -19,6 +19,40 @@
     </section>
 <script src="footer.js"></script>
 
+<script>
+  function validateForm(event) { 
+      event.preventDefault();
+      
+      const commentText = document.getElementById('text').value;
+      
+      const formData = {
+          comment: commentText
+      }
+      postData(data)
+    }
+      
+      async function postData(data){
+      try {
+          const response = await fetch('http://localhost:3010/user/submit-contact', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(formData)
+          });
+          
+          const responseData = await response.json();
+                if (!responseData.success) {
+                throw  Error(responseData.error);
+                }
+                alert(responseData.message)
+            } catch (error) {
+                alert(error.message)
+            }
+      }
+  
+</script>
+
 
 </body>
 </html>
