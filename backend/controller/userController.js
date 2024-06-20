@@ -46,5 +46,37 @@ const login = async(req,res)=>{
     }
 
 }
+const depBack = async (req,res)=>{
+    try {
+        
+        const { depName, depDescription, depImage} = req.body;
+        console.log(req.body)
+        const checkUser  = await User.findOne({depName:depName})
+        if (checkUser){
+            throw Error("User already Exists")
+        }
+        await User.create({
+            depName: depName,
+            depDescription: depDescription,
+            depImage: depImage
+        })
+       
+            return res.status(200).json({message: "Department submitted succesfull", success:true});
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({error: error.message, success:false});
+        
+    }
+}
 
-export {signUp,login}
+const contact = async (req,res)=>{
+    try {        
+       
+            return res.status(200).json({message: "Submitted succesfull", success:true});
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({error: error.message, success:false});
+        
+    }
+}
+export {signUp,login, depBack, contact}

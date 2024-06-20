@@ -85,7 +85,7 @@ font-size: 20px;
 }
 
 .btn-dark{
-    color: black;
+    color: whitesmoke;
 }
 
 .section{
@@ -122,19 +122,27 @@ font-size: 20px;
 }
 
 .contact{
-    background-color: rgb(43 71 70 / 63%);
-    height:650px;
+    background: url(../picture/m.jpeg);
+    background-size: cover;
+    background-position: center;
+    height:600px;
 }
 .text-center{
     text-align: center;
     padding-top: 19px;
     font-family: 'Ubuntu', sans-serif;
-    font-size: 30px;
+    font-size: 35px;
+    color: white;
 }
 .form{
     max-width: 65%;
     margin: 27px auto;
+
 }
+.sc{
+    color: aliceblue;
+}
+
 .form-input{
     margin: 7px 0;
     padding: 5px 13px;
@@ -145,8 +153,9 @@ font-size: 20px;
 }
 .text-footer{
     text-align: center;
-    padding: 19px 0;
+    padding: 20px 0px;
     font-family: 'Ubuntu', sans-serif;
+    font-size: px;
     display: flex;
     justify-content: center;
     color: aliceblue;

@@ -1,4 +1,7 @@
 body {
+    background: url(../picture/111.webp) no-repeat;
+    background-size: auto;
+    background-position: center;
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
     margin: 0;
@@ -11,7 +14,6 @@ html{
     max-width: 600px;
     margin: 20px auto 70px auto;
     padding: 10px;
-    background-color: rgb(119, 133, 133);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
 }
