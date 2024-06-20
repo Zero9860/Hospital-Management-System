@@ -3,37 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Regisration</title>
+    <title>Registration</title>
     <link rel="stylesheet" href="signup.css">
     <link rel="stylesheet" href="./css/style.css">
     <script>
         if(sessionStorage.getItem('user')){
-            window.location.href = "bookingForm.html"
+            window.location.href = "bookingForm.html";
         }
     </script>
-
 </head>
 <body>
     <script src="header.js"></script> 
-
     <div class="wrapper">
         <div class="form-wrapper sign-up">
-            <form >
+            <form id="signupForm">
                 <h2>Signup</h2>
                 <div class="input-group">
-                    <input type="text" id="username" name="username">
+                    <input type="text" id="user" name="username" required>
                     <label for="username">Username</label>
                 </div>
                 <div class="input-group">
-                    <input type="text" id="email" name="email">
+                    <input type="email" id="email" name="email" required>
                     <label for="email">Email</label>
                 </div>
                 <div class="input-group">
-                    <input type="password" id="password" name="password">
+                    <input type="password" id="password" name="password" required>
                     <label for="password">Password</label>
                 </div>
+                <div style="color:white"> Type :    
+                    Patient <input type="radio" id="rolePatient" name="role" value="0" required>
+                    Doctor <input type="radio" id="roleDoctor" name="role" value="1">
+                </div> 
+                <div id="doctorOptions" style="display: none;">
+                    <label for="doctorOptionsSelect">Doctor Options:</label>
+                    <select id="doctorOptionsSelect" required></select>
+                </div>
                 <div>
-                    <button onclick="validateForm(event)"  class="signup-button" type="submit">Signup</button>
+                    <button onclick="validateForm(event)" class="signup-button" type="submit">Signup</button>
                 </div>
                 <div class="signup-link">
                     <p>Already have an account?<a href="login.html" class="signbtn-link">Login</a></p>
@@ -45,62 +51,118 @@
     <script src="footer.js"></script> 
 
    
-    <script>
-        function validateForm(event) { 
-            event.preventDefault() 
-            let error = "";
-            const username = document.getElementById('username').value;
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const checkUsername = username.trim() == '';
-            const checkEmail = email.trim() == '';
-            const data = {
-                "name":username,
-                "email":email,
-                "password": password
-            }
 
-            if (checkUsername) {
-                error = 'Username is required';
-            } else if (checkEmail) {
-                error = 'Email is required';
-            } else if (!isValidEmail(email)) {
-                error = 'Invalid email format';
-            }
-
-            if (password.length < 8 || password.trim() == '' || checkUsername || checkEmail) {
-                alert(error || "Password must be at least 8 characters long");
-                return false;
-            }
-            postData(data)
-            
-        }
-
-        async function postData( data) {
-            try {
-                const response = await fetch("http://localhost:3010/user/signup", {
-                method: 'POST', // or 'PUT', 'DELETE', etc.
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data) 
-                });
-
-                const responseData = await response.json();
-                if (!responseData.success) {
-                throw  Error(responseData.error);
-                }
-                alert(responseData.message)
-            } catch (error) {
-                alert(error.message)
-            }
-}
-
-
-        function isValidEmail(email) {
-            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return re.test(String(email).toLowerCase());
-        }
-    </script> 
 </body>
 </html>
+<script> 
+    document.addEventListener('DOMContentLoaded', function() {
+const rolePatient = document.getElementById('rolePatient');
+const roleDoctor = document.getElementById('roleDoctor');
+const doctorOptionsDiv = document.getElementById('doctorOptions');
+const doctorOptionsSelect = document.getElementById('doctorOptionsSelect');
+
+// Add change event listener to radio buttons
+rolePatient.addEventListener('change', function() {
+    doctorOptionsDiv.style.display = 'none';
+});
+
+roleDoctor.addEventListener('change', async function() {
+    doctorOptionsDiv.style.display = 'block';
+
+    // Fetch doctor options
+    try {
+        const response = await fetch('http://localhost:3010/department/'); // Replace with your API endpoint
+        const data = await response.json();
+
+        // Clear existing options
+        doctorOptionsSelect.innerHTML = '';
+
+        // Populate options
+        data.departs.forEach(option => {
+            const optionElement = document.createElement('option');
+            optionElement.value = option._id; // Adjust based on your API response
+            optionElement.textContent = option.name; // Adjust based on your API response
+            doctorOptionsSelect.appendChild(optionElement);
+        });
+    } catch (error) {
+        console.error('Error fetching doctor options:', error);
+        alert(error)
+    }
+});
+
+const signupForm = document.getElementById('signupForm');
+
+signupForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const username = document.getElementById('user').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const role = document.querySelector('input[name="role"]:checked');
+    let departmentId = null;
+
+    if (!username || !role) {
+        showError('Username and role selection are required');
+        return;
+    } else if (!email) {
+        showError('Email is required');
+        return;
+    } else if (!isValidEmail(email)) {
+        showError('Invalid email format');
+        return;
+    } else if (password.length < 8) {
+        showError('Password must be at least 8 characters long');
+        return;
+    }
+
+    if (role.value == '1') {
+        // Doctor role is selected, get selected department ID
+        departmentId = doctorOptionsSelect.value;
+        if (!departmentId) {
+            showError('Please select a department');
+            return;
+        }
+    }
+
+    const data = {
+        name: username,
+        email: email,
+        password: password,
+        role: role.value,
+        department: departmentId // Include department ID in the data to be sent
+    };
+
+    postData(data);
+});
+
+function showError(message) {
+    alert(message)
+}
+
+async function postData(data) {
+    try {
+        const response = await fetch('http://localhost:3010/user/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        const responseData = await response.json();
+        if (!responseData.success) {
+            throw new Error(responseData.error);
+        }
+        alert(responseData.message);
+    } catch (error) {
+        alert(error.message);
+    }
+}
+
+function isValidEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+});
+
+</script> 

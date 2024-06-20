@@ -14,7 +14,7 @@
 
     <div class="btn btns container">
         <h2>Department Form</h2>
-        <form id="departmentForm">
+        <form id="departmentForm" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="deptName">Department Name:</label>
                 <input type="text" id="deptName" name="deptName" required>
@@ -25,9 +25,9 @@
             </div>
             <div class="form-group">
                 <label for="deptImage">Department Image:</label>
-                <input type="text" id="deptImage" name="deptImage"  required>
+                <input type="file" accept="image/*" id="deptImage" name="deptImage" required>
             </div>
-            <button id="free" type="submit">Submit</button>
+            <button id="free" onclick="validateForm(event)" type="submit">Submit</button>
         </form>
     </div>
     <script src="footer.js"></script> 
@@ -38,23 +38,19 @@
             
             const deptName = document.getElementById('deptName').value;
             const deptDescription = document.getElementById('deptDescription').value;
-            const deptImage = document.getElementById('deptImage').value;
+            const deptImage = document.getElementById('deptImage').files[0];
             
-            const formData = {
-               "name" :deptName,
-               "description": deptDescription,
-               "image": deptImage
-            }
-            postData(data)
+            const formData = new FormData();
+            formData.append('name', deptName);
+            formData.append('description', deptDescription);
+            formData.append('image', deptImage);
+            postData(formData)
         }
         async function postData(data){
             try {
-                const response = await fetch('http://localhost:3010/user/submit-department', {
+                const response = await fetch('http://localhost:3010/department/add', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
+                    body: data
                 });
                 
                 const responseData = await response.json();

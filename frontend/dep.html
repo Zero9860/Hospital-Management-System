@@ -13,64 +13,34 @@
     <script src="header.js"></script> 
 
     <div class="container">
-        <div class="grid-item">
-            <img src="./picture/Dep/ART.png" alt="ART">
-            <p>ART</p>
-        </div>
-        <div class="grid-item">
-            <img src="./picture/Dep/cardiology.png" alt="Cardiology">
-            <p>Cardiology</p>
-        </div>
-        <div class="grid-item">
-            <img src="./picture/Dep/CTVS.png" alt="CTVS">
-            <p>CTVS</p>
-        </div>
-        <div class="grid-item">
-            <img src="./picture/Dep/Dental Surgery.png" alt="Dental Surgery">
-            <p>Dental Surgery</p>
-        </div>
-        <div class="grid-item">
-            <img src="./picture/Dep/dermatology.png" alt="Dermaology">
-            <p>Dermaology</p>
-        </div>
-        <div class="grid-item">
-            <img src="./picture/Dep/Diabetes and Endocrine.png" alt="Diabetes">
-            <p>Diabetes and Endocrine</p>
-        </div>
-        <div class="grid-item">
-            <img src="./picture/Dep/ENT.png" alt="ENT">
-            <p>ENT</p>
-        </div>
-        <div class="grid-item">
-            <img src="./picture/Dep/Eye.png" alt="Eye">
-            <p>Eye</p>
-        </div>
-        <div class="grid-item">
-            <img src="./picture/Dep/General surgery.png" alt="General Surgery">
-            <p>General Surgery</p>
-        </div>
-        <div class="grid-item">
-            <img src="./picture/Dep/Genetic.png" alt="Genetic">
-            <p>Genetic</p>
-        </div>
-        <div class="grid-item">
-            <img src="./picture/Dep/Internal Medicine.png" alt="Internal Medicine">
-            <p>Internal Medicine</p>
-        </div>
-        <div class="grid-item">
-            <img src="./picture/Dep/Liver.png" alt="Liver">
-            <p>Liver</p>
-        </div>
-        <div class="grid-item">
-            <img src="./picture/Dep/orthopedics.png" alt="Orthopedics">
-            <p>Orthopedics</p>
-        </div>
-        <div class="grid-item">
-            <img src="./picture/Dep/Plastic Surgery.png" alt="Plastic Surgery">
-            <p>Plastic Surgery</p>
-        </div>
+       
     <script src="footer.js"></script> 
+<script>
+    // Example API endpoint
+const apiUrl = 'http://localhost:3010/department';
 
+// Fetch data from the API
+fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+        // Process the data and generate HTML for each department
+        const departmentsContainer = document.getElementsByClassName('container')[0];
+        data.departs.forEach(department => {
+            const departmentHtml = `
+                <div class="grid-item">
+                    <img src="http://localhost:3010/uploads/${department.image}" alt="${department.name}">
+                    <p>${department.name}</p>
+                </div>
+            `;
+            departmentsContainer.innerHTML += departmentHtml;
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+        // Handle errors gracefully, e.g., show a message to the user
+    });
+
+</script>
         
 </body>
 </html>

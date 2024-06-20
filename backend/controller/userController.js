@@ -4,10 +4,14 @@ import bcrypt from 'bcrypt'
 const signUp = async (req,res)=>{
     try {
         
-        const { name, email, password,role } = req.body;
-        console.log(req.body)
+        const { name, email, password,role, department } = req.body;
+        let depart =null
+        console.log(req.body,"dataaa")
         const securedPass = await bcrypt.hash(password, 10)
         const checkUser  = await User.findOne({email: email})
+        if ( role == 1){
+            depart = department
+        }
         if (checkUser){
             throw Error("User already Exists")
         }
@@ -15,7 +19,8 @@ const signUp = async (req,res)=>{
             name: name,
             email: email,
             password: securedPass,
-            role: role
+            role: role,
+            department: depart
         })
        
             return res.status(200).json({message: "Signup succesfull", success:true});
@@ -46,37 +51,5 @@ const login = async(req,res)=>{
     }
 
 }
-const depBack = async (req,res)=>{
-    try {
-        
-        const { depName, depDescription, depImage} = req.body;
-        console.log(req.body)
-        const checkUser  = await User.findOne({depName:depName})
-        if (checkUser){
-            throw Error("User already Exists")
-        }
-        await User.create({
-            depName: depName,
-            depDescription: depDescription,
-            depImage: depImage
-        })
-       
-            return res.status(200).json({message: "Department submitted succesfull", success:true});
-    } catch (error) {
-        console.log(error)
-        return res.status(500).json({error: error.message, success:false});
-        
-    }
-}
 
-const contact = async (req,res)=>{
-    try {        
-       
-            return res.status(200).json({message: "Submitted succesfull", success:true});
-    } catch (error) {
-        console.log(error)
-        return res.status(500).json({error: error.message, success:false});
-        
-    }
-}
-export {signUp,login, depBack, contact}
+export {signUp,login}

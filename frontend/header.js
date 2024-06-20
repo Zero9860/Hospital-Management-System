@@ -36,13 +36,18 @@ document.addEventListener('DOMContentLoaded', function() {
     let user = sessionStorage.getItem("user");
     let username = document.getElementById('username');
     let logoutButton = document.getElementById('logout');
+    let dep = document.getElementById('add-depart');
+    dep.style.display = "none"
 
     if (user) {
         username.innerHTML = "Welcome " + user;
         logoutButton.style.display = "block"; // Show the logout button
+       
     } else {
         logoutButton.style.display = "none"; // Hide the logout button if no user is logged in
     }
+        if (sessionStorage.getItem('role') == 2){
+        document.getElementById('add-depart').style.display = "block";}
 });
 const handleLogout = ()=>{
     const ans = confirm("Are you sure you want to Logout?")
@@ -53,6 +58,7 @@ const handleLogout = ()=>{
     logoutButton = "none"
     username.innerHTML = ""
         document.getElementById('logout').style.display = "none"; // Hide the logout button
+        window.location.href="home.html"
 
     }
 </script>

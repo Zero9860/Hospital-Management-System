@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import userRoutes from './routes/userRoutes.js';
+import docRoutes from './routes/doctorRoutes.js'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import { db } from './db/conn.js';
@@ -17,11 +18,15 @@ const __dirname = path.dirname(__filename);
 
 // Serve static files from the public directory
 const static_path = path.join(__dirname, '../public');
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 app.use(express.static(static_path));
 
 
 
 app.use('/user',userRoutes)
+app.use('/department',docRoutes)
+
 
 
 
