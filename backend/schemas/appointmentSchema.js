@@ -1,12 +1,18 @@
 import mongoose from 'mongoose'
 
 const appointSchema=mongoose.Schema({
-    userId: mongoose.Schema.Types.ObjectId,
-    docId: mongoose.Schema.Types.ObjectId,
+    userId: mongoose.Types.ObjectId,
+    docId: mongoose.Types.ObjectId,
+    age:Number,
     time:String,
+    gender:String,
     date:String,
-    status:Boolean
+    status:{
+        type: Boolean,
+        default:false
+    },
+    notes: String
 }
 
 )
-export default mongoose.model('Appointment',appointSchema)
+export default mongoose.model('appointment',appointSchema)

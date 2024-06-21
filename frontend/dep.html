@@ -27,7 +27,7 @@ fetch(apiUrl)
         const departmentsContainer = document.getElementsByClassName('container')[0];
         data.departs.forEach(department => {
             const departmentHtml = `
-                <div class="grid-item">
+                        <div class="grid-item" onclick="handleItemClick(event)" data-id="${department._id}">
                     <img src="http://localhost:3010/uploads/${department.image}" alt="${department.name}">
                     <p>${department.name}</p>
                 </div>
@@ -37,8 +37,12 @@ fetch(apiUrl)
     })
     .catch(error => {
         console.error('Error fetching data:', error);
-        // Handle errors gracefully, e.g., show a message to the user
     });
+
+    function handleItemClick(event) {
+        const departmentId = event.currentTarget.getAttribute('data-id');
+                window.location.href = `departmentDetails.html?id=${departmentId}`;
+        }
 
 </script>
         

@@ -43,7 +43,7 @@ const login = async(req,res)=>{
             throw Error("login with correct credentials")
         }
         console.log(user.name)
-        res.status(200).json({success: true,message:"Login SuccessFull", username:user.name, email:user.email, role:user.role})
+        res.status(200).json({success: true,message:"Login SuccessFull", username:user.name, email:user.email, role:user.role, userId: user._id})
     } catch (error) {
         console.log(error)
         res.status(401).json({success: false, error: error.message})

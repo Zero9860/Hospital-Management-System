@@ -6,9 +6,9 @@ const userSchema = mongoose.Schema({
     password: String,
     role: Number,
     department: {
-        type:  mongoose.Schema.Types.ObjectId,
+        type:  mongoose.Types.ObjectId,
         default: null // Default value set to null
     }
 });
 
-export default mongoose.model('User', userSchema);
+export default mongoose.model('user', userSchema);

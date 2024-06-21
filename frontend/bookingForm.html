@@ -8,16 +8,13 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/responsive.css">
 </head>
-<body >
+<body>
     <script src="header.js"></script> 
 
     <div class="container">
         <h2>Appointment Form</h2>
         <form id="bookingForm" style="height: fit-content">
-            <div class="form-group">
-                <label for="name">Patient Name:</label>
-                <input type="text" id="name" name="name">
-            </div>
+      
             <div class="form-group">
                 <label for="age">Age:</label>
                 <input type="number" id="age" name="age" required min="0">
@@ -37,22 +34,16 @@
             </div>
             <div class="form-group">
                 <label for="department">Department:</label>
-                <select id="department" name="department" required>
+                <select id="department-select" name="department" onchange="fetchDoctors()">
                     <option value="">Select Department</option>
-                    <option value="art">ART</option>
-                    <option value="cardiology">Cardiology</option>
-                    <option value="ctvs">CTVS</option>
-                    <option value="dental-surgery">Dental Surgery</option>
-                    <option value="dermatology">Dermatology</option>
-                    <option value="diabetes">Diabetes and Endocrine</option>
-                    <option value="ent">ENT</option>
-                    <option value="eye">Eye</option>
-                    <option value="general-surgery">General Surgery</option>
-                    <option value="genetic">Genetic</option>
-                    <option value="internal-medicine">Internal Medicine</option>
-                    <option value="liver">Liver</option>
-                    <option value="orthopedics">Orthopedics</option>
-                    <option value="plastic-surgery">Plastic Surgery</option>
+                    <!-- Departments will be dynamically populated here -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="doctor">Doctor:</label>
+                <select id="doctor" name="doctor" required>
+                    <option value="">Select Doctor</option>
+                    <!-- Doctors will be dynamically populated here -->
                 </select>
             </div>
             <div class="form-group">
@@ -67,44 +58,98 @@
                 <label for="notes">Additional Notes:</label>
                 <textarea id="notes" name="notes"></textarea>
             </div>
-            <button type="submit">Book Appointment</button>
+            <button type="submit" onclick="validateForm(event)">Book Appointment</button>
         </form>
     </div>
-        <script src="footer.js"></script>
-
-        <script>
-            function validateForm(event) { 
-                event.preventDefault();
-                
-                const commentText = document.getElementById('text').value;
-                
-                const formData = {
-                    comment: commentText
-                };
     
-                postData(formData);
-            }
-            
-            async function postData(data) {
-                try {
-                    const response = await fetch('http://localhost:3010/user/submit-contact', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(data)
-                    });
+    <script src="footer.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Fetch departments from API
+                const departmentsUrl = 'http://localhost:3010/department'; // Adjust URL as per your API endpoint
+                const response = await fetch(departmentsUrl);
+                const departmentsData = await response.json();
+
+                // Populate department select options
+                const departmentSelect = document.getElementById('department-select');
+                departmentsData.departs.forEach((department, index) => {
+                
+                    const option = document.createElement('option');
+                    option.innerHTML = '<option value="">Select Department</option>';
                     
-                    const responseData = await response.json();
-                    if (!responseData.success) {
-                        throw new Error(responseData.error);
-                    }
-                    alert(responseData.message);
-                } catch (error) {
-                    alert(error.message);
-                }
+                    option.value = department._id; // Adjust as per your department ID
+                    option.textContent = department.name; // Adjust as per your department name
+                    departmentSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error fetching departments:', error);
+                alert('Failed to fetch departments. Please try again later.');
             }
-        </script>
+        });
+
+        async function fetchDoctors() {
+            const departmentId = document.getElementById('department-select').value;
+            const doctorsUrl = `http://localhost:3010/department/doctors/${departmentId}`; // Adjust URL as per your API endpoint
+            
+            try {
+                const response = await fetch(doctorsUrl);
+                const doctorsData = await response.json();
+
+                // Populate doctor select options
+                const doctorSelect = document.getElementById('doctor');
+                doctorSelect.innerHTML = '<option value="">Select Doctor</option>';
+                doctorsData.forEach(doctor => {
+                    const option = document.createElement('option');
+                    option.value = doctor._id; // Adjust as per your doctor ID
+                    option.textContent = doctor.name; // Adjust as per your doctor name
+                    doctorSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error fetching doctors:', error);
+                alert('Failed to fetch doctors. Please try again later.');
+            }
+        }
+
+        async function validateForm(event) {
+            event.preventDefault();
+
+            const formData = {
+                age: document.getElementById('age').value,
+                gender: document.getElementById('gender').value,
+                docId: document.getElementById('doctor').value,
+                date: document.getElementById('appointment-date').value,
+                time: document.getElementById('appointment-time').value,
+                notes: document.getElementById('notes').value,
+                userId: sessionStorage.getItem('userId')
+            };
+            console.log(formData)
+
+            postData(formData);
+        }
+
+        async function postData(data) {
+            try {
+                const response = await fetch('http://localhost:3010/appointment/book', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const responseData = await response.json();
+                if (!responseData.success) {
+                    throw new Error(responseData.error);
+                }
+                alert(responseData.message);
+            } catch (error) {
+                console.error('Error booking appointment:', error);
+                alert('Failed to book appointment. Please try again later.');
+            }
+        }
+    </script>
 
 </body>
 </html>

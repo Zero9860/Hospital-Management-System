@@ -30,6 +30,10 @@
     width: 60px;
     height: 60px;
 }
+.grid-item:hover{
+    outline: 2px solid blue; 
+    cursor: pointer;
+}
 
 .grid-item p {
     margin: 10px 0 0;

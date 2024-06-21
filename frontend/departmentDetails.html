@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <title>Document</title>
+</head>
+<body>
+    <script src="header.js"></script>
+
+    <!-- Placeholder for where you want to display the data -->
+    <div id="department-info">
+        <h1 id="department-name"></h1>
+        <img id="department-image" src="" alt="Department Image" style="width: 10%;">
+        <p id="department-description"></p>
+        <h1>Doctors of the department</h1>
+        <div id="doctors-list" class="doctors"></div>
+    </div>
+
+    <!-- Scripts to include -->
+    <script src="footer.js"></script>
+
+    <!-- Script to fetch and display department data -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const depId = window.location.href.split("=")[1];
+            const apiUrl = `http://localhost:3010/department/${depId}`;
+            
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Department data:', data);
+                    // Update HTML elements with fetched data
+                    document.getElementById('department-name').textContent = data.name;
+                    document.getElementById('department-image').src = `http://localhost:3010/uploads/${data.image}`;
+                    document.getElementById('department-description').textContent = data.description;
+
+                    const doctorsList = document.getElementById('doctors-list');
+                    data.doctors.forEach(doctor => {
+                        const doctorElement = document.createElement('h2');
+                        doctorElement.textContent = doctor.name; // Adjust as per your doctor object structure
+                        doctorsList.appendChild(doctorElement);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching department data:', error);
+                });
+        });
+    </script>
+</body>
+</html>

@@ -1,4 +1,7 @@
+import mongoose from 'mongoose';
 import Department from '../schemas/departmentSchema.js'
+import User from '../schemas/userSchema.js'
+
 
 
 
@@ -39,5 +42,37 @@ const contact = async (req,res)=>{
       
   }
 }
+const getOneDep = async (req, res)=>{
+  console.log("HERERE")
+  const departs = await Department.aggregate([
+    {
+      $match: {
+        _id: new  mongoose.Types.ObjectId(req.params.id) // Cast to ObjectId
+      }
+    },    {
+      $lookup: {
+        from:'users',
+        localField:'_id',
+        foreignField:'department',
+        as:'doctors'
+      }
+    }
+  ])
+  return res.status(200).send(departs[0]);
 
-export { contact, depBack, getDepart}
+}
+
+const doctors = async (req, res)=>{
+  try {
+    console.log(req.params.did)
+    
+    const doctors = await User.find({department:  (req.params.did)})
+    return res.status(200).send(doctors);
+  } catch (error) {
+    console.log(error)
+    
+  }
+}
+
+
+export { contact, depBack, getDepart,getOneDep, doctors}

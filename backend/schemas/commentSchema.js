@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 const commentSchema=mongoose.Schema({
-    userId:new mongoose.Schema.Types.ObjectId,
+    userId: mongoose.Types.ObjectId,
     description:String
 }
 

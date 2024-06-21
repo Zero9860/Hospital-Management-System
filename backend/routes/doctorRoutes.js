@@ -3,7 +3,7 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 
-import {  contact, depBack, getDepart } from "../controller/departmentController.js";
+import {  contact, depBack, doctors, getDepart, getOneDep } from "../controller/departmentController.js";
 const router = express.Router();
 // Multer configuration
 const storage = multer.diskStorage({
@@ -27,6 +27,10 @@ const upload = multer({ storage: storage });
 router.post('/add',upload.single('image'), depBack);
 router.post('/contact', contact);
 router.get('/', getDepart);
+router.get('/:id', getOneDep);
+router.get('/doctors/:did', doctors);
+
+
 
 
 

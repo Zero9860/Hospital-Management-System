@@ -4,7 +4,14 @@
     padding: 0;
 }
 
+td{
+    padding: 1%;
+    margin:2%
+}
 
+table{
+    width:100%
+}
 
 #search{
     padding: 5px;
