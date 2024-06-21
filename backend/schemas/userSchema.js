@@ -6,7 +6,7 @@ const userSchema = mongoose.Schema({
     password: String,
     role: Number,
     department: {
-        type: mongoose.Schema.Types.ObjectId,
+        type:  mongoose.Schema.Types.ObjectId,
         default: null // Default value set to null
     }
 });

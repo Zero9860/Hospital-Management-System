@@ -31,7 +31,6 @@ app.use(express.static(static_path));
 app.use('/user',userRoutes)
 app.use('/department',docRoutes)
 app.use('/appointment', appointmentRoutes)
-app.use('/appointment', appointmentRoutes)
 
 
 

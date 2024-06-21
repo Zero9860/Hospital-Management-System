@@ -1,6 +1,6 @@
-import Appointment from '../schemas/appointmentSchema';
+import Appointment from '../schemas/appointmentSchema.js';
 
-export const bookAppointment = async (req, res) => {
+ const bookAppointment = async (req, res) => {
     try {
         const appointment = new Appointment(req.body);
         await appointment.save();
@@ -9,7 +9,7 @@ export const bookAppointment = async (req, res) => {
         res.status(400).json({ success: false, message: 'Error booking appointment', error: error.message });
     }
 }
-export const getAppointments = async (req, res) => {
+ const getAppointments = async (req, res) => {
     try {
         const appointments = await Appointment.find();
         res.status(200).json({ success: true, data: appointments });
@@ -18,4 +18,4 @@ export const getAppointments = async (req, res) => {
     }
 }
 
-export{bookAppointment, getAppointments}
+export {bookAppointment, getAppointments}

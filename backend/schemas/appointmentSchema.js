@@ -1,9 +1,10 @@
 import mongoose from 'mongoose'
 
 const appointSchema=mongoose.Schema({
-    userId:new mongoose.Schema.Types.ObjectId,
-    docId:new mongoose.Schema.Types.ObjectId,
+    userId: mongoose.Schema.Types.ObjectId,
+    docId: mongoose.Schema.Types.ObjectId,
     time:String,
+    date:String,
     status:Boolean
 }
 
