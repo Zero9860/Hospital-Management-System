@@ -8,4 +8,4 @@ const appointSchema=mongoose.Schema({
 }
 
 )
-export default mongoose.model('appointment',appointSchema)
+export default mongoose.model('Appointment',appointSchema)
